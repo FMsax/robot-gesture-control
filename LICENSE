@@ -1,1 +1,71 @@
 MIT License 
+
+---
+
+### docs/methodology.md – Technical Documentation
+
+Create a detailed methodology file for **research-lab quality clarity**:
+
+```markdown
+# Methodology: Robot Gesture Control
+
+## 1. Overview
+
+This project controls a humanoid robot using voice commands and pose detection.  
+It supports multiple GUI frameworks (PyQt5, PySimpleGUI) and ensures smooth command execution to Arduino.
+
+---
+
+## 2. Pose Detection
+
+- **Mediapipe Holistic / Pose:**  
+  Detects joint landmarks (wrists, shoulders, nose, eyes) and facial landmarks.
+- **Logic:**  
+  - Left/Right Arm: Compare wrist Y vs shoulder Y
+  - Head Tilt: Compare nose Y vs eye midline
+  - Eye and eyelid state: Measure landmark distances
+
+---
+
+## 3. Voice Control
+
+- **PyAudio + Whisper / Vosk:**  
+  Captures microphone input in real time
+- **Command mapping:**  
+  Uses JSON-like internal structure for phrase-to-command mapping
+- **Smoothing:**  
+  Avoids flooding Arduino with repeated commands by throttling command send interval
+
+---
+
+## 4. Arduino Integration
+
+- **COM Port & Baud Rate:** Configurable
+- **Smooth sending logic:** Ensures reliable motion commands
+- **Reset commands:** Returns robot to neutral pose
+
+---
+
+## 5. GUI Design
+
+- **PyQt5 GUI:** Professional layout with camera feed, logs, manual override buttons, and system controls
+- **PySimpleGUI GUI:** Lightweight, easily modifiable alternative
+- **Logging:** Timestamped logs for debugging
+
+---
+
+## 6. Data Handling
+
+- **State memory:** Tracks last command per joint to avoid redundancy
+- **Video frames:** Captured, flipped, and optionally annotated with landmarks
+- **Logs:** Maintained in GUI and optional output files
+
+---
+
+## 7. Recommended Improvements
+
+- Add JSON export of captured poses & audio for ML dataset creation
+- Implement multi-threading for audio and video to avoid frame drops
+- Add benchmarking of command latency and pose detection accuracy
+
+
